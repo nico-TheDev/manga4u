@@ -44,6 +44,10 @@
   .p {
     @apply font-primary text-sm md:text-base;
   }
+
+  body {
+    @apply bg-primary-dark;
+  }
   /* #endregion  /**======== Typography =========== */
 
   .layout {
@@ -60,6 +64,10 @@
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
   }
+}
+
+.icon {
+  @apply text-4xl text-white;
 }
 
 @layer utilities {
