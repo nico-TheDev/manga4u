@@ -1,33 +1,75 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { HiOutlineMoon, HiOutlineUserCircle, HiSearch } from 'react-icons/hi';
 
 import logo from '@/assets/img/logo.png';
 
-export default function Nav() {
-  return (
-    <nav className='mx-auto flex h-[15vh] w-[90%] items-center justify-between'>
-      <Image src={logo} alt='Main Logo' layout='fixed' />
+const pathList = [
+  {
+    path: '/',
+    name: 'Home',
+  },
+  {
+    path: 'popular',
+    name: 'Popular',
+  },
+  {
+    path: 'latest',
+    name: 'Latest',
+  },
+  {
+    path: 'recent',
+    name: 'Recently Added',
+  },
+];
 
-      <form className='flex rounded-md border-2 border-white px-2 py-1'>
-        <HiSearch className='icon' />
-        <input
-          type='text'
-          className='focus: border-none bg-transparent p-0 px-2 text-white '
-          placeholder='Search for manga'
-        />
-      </form>
+export default function Nav() {
+  const router = useRouter();
+  const { pathname } = router;
+
+  return (
+    <nav className='mx-auto my-8 flex h-[15vh] w-[90%] items-start justify-between'>
+      <Image src={logo} alt='Main Logo' layout='fixed' width={200} />
+
+      <div className='grid max-w-lg flex-1 gap-4'>
+        <form className='flex rounded-md border-2 border-white px-2 py-1'>
+          <HiSearch className='icon' />
+          <input
+            type='text'
+            className='flex-1 border-none bg-transparent p-0 px-2 text-white focus:outline-none'
+            placeholder='Search for manga'
+          />
+        </form>
+
+        <ul className='flex items-center justify-between gap-8'>
+          {pathList.map((item) => (
+            <li className='' key={item.name}>
+              <Link href={item.path}>
+                <a
+                  className={`text-md border-b-4 border-b-transparent pb-2 font-bold text-white hover:border-b-primary-main hover:text-primary-main ${
+                    pathname === item.path &&
+                    'border-b-primary-main text-primary-main'
+                  }`}
+                >
+                  {item.name}
+                </a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <ul className='flex items-center gap-2'>
         <li className=''>
-          <Link href=''>
-            <HiOutlineMoon className='icon' />
-          </Link>
+          <button className=''>
+            <HiOutlineMoon className='icon cursor-pointer' />
+          </button>
         </li>
         <li className=''>
           <Link href=''>
-            <HiOutlineUserCircle className='icon' />
+            <HiOutlineUserCircle className='icon cursor-pointer' />
           </Link>
         </li>
       </ul>
