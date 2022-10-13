@@ -9,19 +9,19 @@ import logo from '@/assets/img/logo.png';
 const pathList = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
   },
   {
     path: 'popular',
-    name: 'Popular',
+    name: 'popular',
   },
   {
     path: 'latest',
-    name: 'Latest',
+    name: 'latest',
   },
   {
     path: 'recent',
-    name: 'Recently Added',
+    name: 'recently added',
   },
 ];
 
@@ -31,7 +31,11 @@ export default function Nav() {
 
   return (
     <nav className='mx-auto my-8 flex h-[15vh] w-[90%] items-start justify-between'>
-      <Image src={logo} alt='Main Logo' layout='fixed' width={200} />
+      <Link href='/'>
+        <a>
+          <Image src={logo} alt='Main Logo' layout='fixed' width={200} />
+        </a>
+      </Link>
 
       <div className='grid max-w-lg flex-1 gap-4'>
         <form className='flex rounded-md border-2 border-white px-2 py-1'>
@@ -48,7 +52,7 @@ export default function Nav() {
             <li className='' key={item.name}>
               <Link href={item.path}>
                 <a
-                  className={`text-md border-b-4 border-b-transparent pb-2 font-bold text-white hover:border-b-primary-main hover:text-primary-main ${
+                  className={`text-md border-b-4 border-b-transparent pb-2 font-bold capitalize text-white hover:border-b-primary-main hover:text-primary-main ${
                     pathname === item.path &&
                     'border-b-primary-main text-primary-main'
                   }`}
@@ -68,8 +72,10 @@ export default function Nav() {
           </button>
         </li>
         <li className=''>
-          <Link href=''>
-            <HiOutlineUserCircle className='icon cursor-pointer' />
+          <Link href='/signin'>
+            <a>
+              <HiOutlineUserCircle className='icon cursor-pointer' />
+            </a>
           </Link>
         </li>
       </ul>
