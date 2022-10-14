@@ -96,3 +96,23 @@
     background-size: 0 2px, 100% 2px;
   }
 }
+
+/* CUSTOM CSS */
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #e43f5a !important;
+}
+
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  background-color: #fff !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #e43f5a !important;
+  width: 12px !important;
+  height: 12px !important;
+}

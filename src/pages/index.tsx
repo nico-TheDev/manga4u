@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 import Header from '@/components/Header';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
+import TitleSlider from '@/components/TitleSlider';
 
 const sample = ['One Piece', 'Blue Lock', 'Cyberpunk:Edgerunners'];
 
@@ -15,16 +16,15 @@ export default function HomePage() {
   return (
     <Layout>
       <Seo />
-
+      {/* HEADER SLIDER */}
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={50}
         slidesPerView={1}
         navigation
-        pagination={{ clickable: true }}
-        style={{
-          '--swiper-navigation-color': '#E43F5A',
-          '--swiper-pagination-color': '#E43F5A',
+        loop={true}
+        pagination={{
+          clickable: true,
         }}
       >
         {sample.map((item) => (
@@ -33,6 +33,9 @@ export default function HomePage() {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* SLIDER */}
+      <TitleSlider title='Most Popular' />
     </Layout>
   );
 }

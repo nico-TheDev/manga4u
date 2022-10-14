@@ -14,7 +14,7 @@ type Props = {
 
 export default function Header({ title }: Props) {
   return (
-    <header className='relative flex h-[50vh] items-center py-4'>
+    <header className='relative flex h-[60vh] items-center py-4'>
       <Image
         src={sample}
         className='absolute top-0 left-0 h-full w-full object-cover brightness-[30%]'
