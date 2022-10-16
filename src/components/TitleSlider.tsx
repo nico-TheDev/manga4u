@@ -27,7 +27,7 @@ export default function TitleSlider({ title }: Props) {
       <h2 className='mb-8 text-white'>{title}</h2>
       <Swiper
         modules={[Navigation]}
-        spaceBetween={50}
+        spaceBetween={40}
         slidesPerView={5}
         navigation
         loop={true}
