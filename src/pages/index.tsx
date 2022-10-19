@@ -1,20 +1,23 @@
 import Link from 'next/link';
-import * as React from 'react';
+import React from 'react';
 
 import HeaderSlider from '@/components/HeaderSlider';
-import Layout from '@/components/layout/Layout';
-import Seo from '@/components/Seo';
 import SummaryCard from '@/components/SummaryCard';
 import TitleSlider from '@/components/TitleSlider';
 
-export default function HomePage() {
+import { MangaData } from '@/types/data-types/manga';
+
+type Props = {
+  data: MangaData[];
+};
+
+export default function HomePage({ data }: Props) {
   return (
-    <Layout>
-      <Seo />
+    <>
       {/* HEADER SLIDER */}
       <HeaderSlider />
       {/* SLIDER */}
-      <TitleSlider title='Most Popular' />
+      <TitleSlider title='Most Popular' mangaList={data} />
       {/* RECENTLY ADDED */}
       <div className='mx-auto my-14 w-[90%] '>
         <div className='mb-8 flex w-full items-center justify-between'>
@@ -35,7 +38,16 @@ export default function HomePage() {
         </div>
       </div>
       {/* SLIDER */}
-      <TitleSlider title='Latest' />
-    </Layout>
+      <TitleSlider title='Latest' mangaList={data} />
+    </>
   );
+}
+
+export async function getStaticProps() {
+  const res = await fetch(
+    'https://api.mangadex.org/manga?limit=20&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[createdAt]=desc&includes[]=cover_art'
+  );
+
+  const data: MangaData[] = await res.json();
+  return { props: data };
 }

@@ -6,22 +6,14 @@ import 'swiper/css/navigation';
 
 import CoverCard from '@/components/CoverCard';
 
+import { MangaData } from '@/types/data-types/manga';
+
 type Props = {
   title: string;
+  mangaList: MangaData[];
 };
 
-const sample = [
-  'Hello',
-  'World',
-  'Hello',
-  'World',
-  'Hello',
-  'World',
-  'Hello',
-  'World',
-];
-
-export default function TitleSlider({ title }: Props) {
+export default function TitleSlider({ title, mangaList }: Props) {
   return (
     <div className='mx-auto my-14 w-[90%]'>
       <h2 className='mb-8 text-white'>{title}</h2>
@@ -30,11 +22,17 @@ export default function TitleSlider({ title }: Props) {
         spaceBetween={40}
         slidesPerView={5}
         navigation
-        loop={true}
+        loop={false}
       >
-        {sample.map((item) => (
-          <SwiperSlide key={item}>
-            <CoverCard />
+        {mangaList.map((manga) => (
+          <SwiperSlide key={manga.id}>
+            <CoverCard
+              mangaId={manga.id}
+              title={manga.attributes.title.en}
+              author='No Author'
+              relationships={manga.relationships}
+              tags={manga.attributes.tags}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
