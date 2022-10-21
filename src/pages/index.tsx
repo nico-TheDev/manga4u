@@ -5,19 +5,58 @@ import HeaderSlider from '@/components/HeaderSlider';
 import SummaryCard from '@/components/SummaryCard';
 import TitleSlider from '@/components/TitleSlider';
 
-import { MangaData } from '@/types/data-types/manga';
+import apiInstance from '@/api';
+import filterMangaData from '@/utils/filterMangaData';
+
+import { MangaSummary } from '@/types/data-types/manga';
 
 type Props = {
-  data: MangaData[];
+  popularMangaList: MangaSummary[];
+  latestMangaList: MangaSummary[];
+  recentlyAddedMangaList: MangaSummary[];
 };
 
-export default function HomePage({ data }: Props) {
+export async function getStaticProps() {
+  try {
+    const res = await Promise.all([
+      apiInstance.get(
+        '/manga?limit=30&contentRating[]=safe&order[rating]=desc&includes[]=cover_art'
+      ),
+      apiInstance.get(
+        '/manga?limit=30&contentRating[]=safe&order[updatedAt]=desc&includes[]=cover_art'
+      ),
+      apiInstance.get(
+        '/manga?limit=30&contentRating[]=safe&order[latestUploadedChapter]=desc&includes[]=cover_art'
+      ),
+    ]);
+
+    const [popularData, latestData, recentlyAddedData] = await Promise.all(
+      res.map((data) => data.data.data)
+    );
+
+    const popularMangaList = filterMangaData(popularData);
+    const latestMangaList = filterMangaData(latestData);
+    const recentlyAddedMangaList = filterMangaData(recentlyAddedData);
+
+    return {
+      props: {
+        popularMangaList,
+        latestMangaList,
+        recentlyAddedMangaList,
+      },
+    };
+  } catch (err) {
+    return { props: {} };
+  }
+}
+
+export default function HomePage({ popularMangaList, latestMangaList }: Props) {
   return (
     <>
       {/* HEADER SLIDER */}
       <HeaderSlider />
       {/* SLIDER */}
-      <TitleSlider title='Most Popular' mangaList={data} />
+      <TitleSlider title='Most Popular' mangaList={popularMangaList} />
       {/* RECENTLY ADDED */}
       <div className='mx-auto my-14 w-[90%] '>
         <div className='mb-8 flex w-full items-center justify-between'>
@@ -38,16 +77,7 @@ export default function HomePage({ data }: Props) {
         </div>
       </div>
       {/* SLIDER */}
-      <TitleSlider title='Latest' mangaList={data} />
+      <TitleSlider title='Latest' mangaList={latestMangaList} />
     </>
   );
-}
-
-export async function getStaticProps() {
-  const res = await fetch(
-    'https://api.mangadex.org/manga?limit=20&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[createdAt]=desc&includes[]=cover_art'
-  );
-
-  const data: MangaData[] = await res.json();
-  return { props: data };
 }
