@@ -32,3 +32,11 @@ export interface MangaAttributes extends AttributeBase {
   contentRating?: MangaContentRating;
   tags: Tag[];
 }
+
+export interface MangaSummary {
+  mangaId: string;
+  title: string;
+  authorId: string | undefined;
+  tags: string[];
+  coverName: string;
+}
