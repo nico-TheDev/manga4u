@@ -29,7 +29,6 @@ export default function CoverCard({ manga }: CardProps) {
 
         <div className='absolute top-0 left-0 flex h-full w-full -translate-y-2 flex-col items-center justify-center p-2 text-center text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'>
           <h4 className='text-md mb-2 text-clip'>{title}</h4>
-          <p className='mb-2 text-sm'>No author</p>
           <p className='flex flex-wrap items-center justify-center gap-2 text-xs'>
             {tags.slice(0, 5).map((tag: string) => (
               <span key={tag}>{tag}</span>

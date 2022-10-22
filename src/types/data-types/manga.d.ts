@@ -31,6 +31,7 @@ export interface MangaAttributes extends AttributeBase {
   year?: number;
   contentRating?: MangaContentRating;
   tags: Tag[];
+  latestUploadedChapter?: string;
 }
 
 export interface MangaSummary {
@@ -39,4 +40,5 @@ export interface MangaSummary {
   authorId: string | undefined;
   tags: string[];
   coverName: string;
+  description: string;
 }

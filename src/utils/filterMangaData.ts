@@ -12,6 +12,8 @@ const filterMangaData: (data: MangaData[]) => MangaSummary[] = (
       (item: Relationship) => item.type === 'author'
     )?.id;
 
+    const description = manga.attributes.description.en || '';
+
     const coverName =
       manga.relationships.find(
         (item: Relationship) => item.type === 'cover_art'
@@ -27,6 +29,7 @@ const filterMangaData: (data: MangaData[]) => MangaSummary[] = (
       authorId,
       tags,
       coverName,
+      description,
     };
   });
 

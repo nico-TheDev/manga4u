@@ -4,39 +4,37 @@ import React from 'react';
 import Button from '@/components/buttons/Button';
 import Pill from '@/components/Pill';
 
-import sample from '@/assets/img/sample.png';
+import getCoverImage from '@/utils/getCoverImage';
+import trimString from '@/utils/trimString';
 
-const sampleGenre = ['Action', 'Shounen', 'Romance'];
+import { MangaSummary } from '@/types/data-types/manga';
 
 type Props = {
-  title: string;
+  manga: MangaSummary;
 };
 
-export default function Header({ title }: Props) {
+export default function Header({ manga }: Props) {
   return (
     <header className='relative flex h-[60vh] items-center py-4'>
       <Image
-        src={sample}
-        className='absolute top-0 left-0 h-full w-full object-cover brightness-[30%]'
+        src={getCoverImage(manga.mangaId, manga.coverName)}
+        className='absolute top-0 left-0 h-full w-full object-cover object-top blur-sm brightness-[30%]'
+        width={512}
         height={400}
-        alt='Title'
+        alt={manga.title}
       />
       <div className='relative mx-auto w-[90%] text-white'>
-        <h2 className='mb-4'>{title}</h2>
+        <h2 className='mb-4'>{manga.title}</h2>
         {/* GENRE LIST */}
         <ul className='mb-4 flex items-center gap-2'>
-          {sampleGenre.map((genre) => (
+          {manga.tags.map((genre) => (
             <li key={genre}>
               <Pill genre={genre} />
             </li>
           ))}
         </ul>
 
-        <p className='mb-8 max-w-xl'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-          velit voluptate, eligendi neque sed a sint odit labore corporis
-          perferendis!
-        </p>
+        <p className='mb-8 max-w-xl'>{trimString(manga.description)}</p>
 
         <Button variant='primary' className='text-sm uppercase'>
           Read More

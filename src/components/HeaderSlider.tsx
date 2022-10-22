@@ -5,9 +5,14 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import Header from '@/components/Header';
-const sample = ['One Piece', 'Blue Lock', 'Cyberpunk:Edgerunners'];
 
-export default function HeaderSlider() {
+import { MangaSummary } from '@/types/data-types/manga';
+
+type Props = {
+  mangaList: MangaSummary[];
+};
+
+export default function HeaderSlider({ mangaList }: Props) {
   return (
     <Swiper
       modules={[Pagination]}
@@ -18,9 +23,9 @@ export default function HeaderSlider() {
         clickable: true,
       }}
     >
-      {sample.map((item) => (
-        <SwiperSlide key={item}>
-          <Header title={item} />
+      {mangaList.map((manga: MangaSummary) => (
+        <SwiperSlide key={manga.mangaId}>
+          <Header manga={manga} />
         </SwiperSlide>
       ))}
     </Swiper>

@@ -14,6 +14,8 @@ type Props = {
   popularMangaList: MangaSummary[];
   latestMangaList: MangaSummary[];
   recentlyAddedMangaList: MangaSummary[];
+  completedMangaList: MangaSummary[];
+  recommendedMangaList: MangaSummary[];
 };
 
 export async function getStaticProps() {
@@ -26,23 +28,37 @@ export async function getStaticProps() {
         '/manga?limit=30&contentRating[]=safe&order[updatedAt]=desc&includes[]=cover_art'
       ),
       apiInstance.get(
-        '/manga?limit=30&contentRating[]=safe&order[latestUploadedChapter]=desc&includes[]=cover_art'
+        '/manga?limit=12&contentRating[]=safe&order[latestUploadedChapter]=desc&includes[]=cover_art'
+      ),
+      apiInstance.get(
+        '/manga?limit=30&contentRating[]=safe&order[rating]=desc&includes[]=cover_art&status[]=completed'
+      ),
+      apiInstance.get(
+        '/manga?limit=10&contentRating[]=safe&order[rating]=desc&includes[]=cover_art&status[]=ongoing'
       ),
     ]);
 
-    const [popularData, latestData, recentlyAddedData] = await Promise.all(
-      res.map((data) => data.data.data)
-    );
+    const [
+      popularData,
+      latestData,
+      recentlyAddedData,
+      completedData,
+      recommendedData,
+    ] = await Promise.all(res.map((data) => data.data.data));
 
     const popularMangaList = filterMangaData(popularData);
     const latestMangaList = filterMangaData(latestData);
     const recentlyAddedMangaList = filterMangaData(recentlyAddedData);
+    const completedMangaList = filterMangaData(completedData);
+    const recommendedMangaList = filterMangaData(recommendedData);
 
     return {
       props: {
         popularMangaList,
         latestMangaList,
         recentlyAddedMangaList,
+        completedMangaList,
+        recommendedMangaList,
       },
     };
   } catch (err) {
@@ -50,13 +66,19 @@ export async function getStaticProps() {
   }
 }
 
-export default function HomePage({ popularMangaList, latestMangaList }: Props) {
+export default function HomePage({
+  popularMangaList,
+  latestMangaList,
+  completedMangaList,
+  recommendedMangaList,
+}: Props) {
   return (
     <>
       {/* HEADER SLIDER */}
-      <HeaderSlider />
+      <HeaderSlider mangaList={recommendedMangaList} />
       {/* SLIDER */}
       <TitleSlider title='Most Popular' mangaList={popularMangaList} />
+      <TitleSlider title='Completed Gems' mangaList={completedMangaList} />
       {/* RECENTLY ADDED */}
       <div className='mx-auto my-14 w-[90%] '>
         <div className='mb-8 flex w-full items-center justify-between'>
