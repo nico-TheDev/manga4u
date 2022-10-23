@@ -34,11 +34,17 @@ export interface MangaAttributes extends AttributeBase {
   latestUploadedChapter?: string;
 }
 
+export type Genre = {
+  id: string;
+  genre: string;
+};
+
 export interface MangaSummary {
   mangaId: string;
   title: string;
   authorId: string | undefined;
-  tags: string[];
+  tags: Genre[];
   coverName: string;
   description: string;
+  lastUpdated: string;
 }

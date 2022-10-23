@@ -19,9 +19,10 @@ const filterMangaData: (data: MangaData[]) => MangaSummary[] = (
         (item: Relationship) => item.type === 'cover_art'
       )?.attributes?.fileName || 'none';
 
-    const tags = manga.attributes.tags.map(
-      (tag: Tag) => tag.attributes.name.en
-    );
+    const tags = manga.attributes.tags.map((tag: Tag) => ({
+      id: tag.id,
+      genre: tag.attributes.name.en,
+    }));
 
     return {
       mangaId,
@@ -30,6 +31,7 @@ const filterMangaData: (data: MangaData[]) => MangaSummary[] = (
       tags,
       coverName,
       description,
+      lastUpdated: manga.attributes.updatedAt,
     };
   });
 
