@@ -28,13 +28,13 @@ export async function getStaticProps() {
         '/manga?limit=30&contentRating[]=safe&order[updatedAt]=desc&includes[]=cover_art'
       ),
       apiInstance.get(
-        '/manga?limit=12&contentRating[]=safe&order[latestUploadedChapter]=desc&includes[]=cover_art'
+        '/manga?limit=12&contentRating[]=safe&order[updatedAt]=desc&includes[]=cover_art'
       ),
       apiInstance.get(
         '/manga?limit=30&contentRating[]=safe&order[rating]=desc&includes[]=cover_art&status[]=completed'
       ),
       apiInstance.get(
-        '/manga?limit=10&contentRating[]=safe&order[rating]=desc&includes[]=cover_art&status[]=ongoing'
+        '/manga?limit=10&contentRating[]=safe&order[rating]=desc&includes[]=cover_art&status[]=completed'
       ),
     ]);
 
@@ -70,6 +70,7 @@ export default function HomePage({
   popularMangaList,
   latestMangaList,
   completedMangaList,
+  recentlyAddedMangaList,
   recommendedMangaList,
 }: Props) {
   return (
@@ -91,11 +92,10 @@ export default function HomePage({
           </Link>
         </div>
 
-        <div className='grid grid-cols-2 gap-10'>
-          <SummaryCard />
-          <SummaryCard />
-          <SummaryCard />
-          <SummaryCard />
+        <div className='grid grid-cols-1 gap-10 sm:grid-cols-2'>
+          {recentlyAddedMangaList.map((manga: MangaSummary) => (
+            <SummaryCard key={manga.mangaId} manga={manga} />
+          ))}
         </div>
       </div>
       {/* SLIDER */}

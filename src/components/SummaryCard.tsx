@@ -1,23 +1,39 @@
+import moment from 'moment';
 import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 
 import Button from '@/components/buttons/Button';
 
-import cover from '@/assets/img/samplecover.jpg';
+import getCoverImage from '@/utils/getCoverImage';
+import trimString from '@/utils/trimString';
 
-export default function SummaryCard() {
+import { MangaSummary } from '@/types/data-types/manga';
+
+type Props = {
+  manga: MangaSummary;
+};
+
+export default function SummaryCard({ manga }: Props) {
   const router = useRouter();
 
-  const handleClick = () => router.push('/manga/1');
+  const handleClick = () => router.push(`/manga/${manga.mangaId}`);
 
   return (
     <div className=' flex  gap-5 bg-secondary-dark pr-4 text-white '>
-      <Image src={cover} alt='cover' className='w-28' />
+      <Image
+        src={getCoverImage(manga.mangaId, manga.coverName)}
+        alt='cover'
+        className='h-40 w-28'
+        width={256}
+        height={512}
+      />
 
       <div className='p-4'>
-        <h6 className='mb-2 text-lg font-bold'>One Piece</h6>
-        <p className='text-md mb-8'>Chapter 1063</p>
+        <h6 className='text-md mb-2 font-bold'>
+          {trimString(manga.title, 40)}
+        </h6>
+        <p className='mb-8 text-sm'>Chapter 1063</p>
         <Button
           variant='primary'
           className='text-md hover:translate-y-0'
@@ -27,7 +43,9 @@ export default function SummaryCard() {
         </Button>
       </div>
 
-      <span className='ml-auto inline-block self-start p-4'>4 hrs ago</span>
+      <span className='ml-auto inline-block self-start whitespace-nowrap p-4'>
+        {moment(manga.lastUpdated).startOf('hour').fromNow()}
+      </span>
     </div>
   );
 }
