@@ -21,7 +21,7 @@ export default function CoverCard({ manga }: CardProps) {
 
   return (
     <Link href={`/manga/${mangaId}`}>
-      <a className='group relative h-72 overflow-hidden'>
+      <a className='group relative block h-72 overflow-hidden'>
         <Image
           src={mangaCover}
           width={256}

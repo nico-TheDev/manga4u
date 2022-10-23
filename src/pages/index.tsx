@@ -28,7 +28,7 @@ export async function getStaticProps() {
         '/manga?limit=30&contentRating[]=safe&order[updatedAt]=desc&includes[]=cover_art'
       ),
       apiInstance.get(
-        '/manga?limit=12&contentRating[]=safe&order[updatedAt]=desc&includes[]=cover_art'
+        '/manga?limit=6&contentRating[]=safe&order[updatedAt]=desc&includes[]=cover_art'
       ),
       apiInstance.get(
         '/manga?limit=30&contentRating[]=safe&order[rating]=desc&includes[]=cover_art&status[]=completed'

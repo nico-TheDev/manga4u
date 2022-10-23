@@ -15,7 +15,7 @@ type Props = {
 
 export default function Header({ manga }: Props) {
   return (
-    <header className='relative flex h-[60vh] items-center justify-center'>
+    <header className='relative flex h-max items-center justify-center md:h-[60vh]'>
       {/* BACKGROUND */}
       <Image
         src={getCoverImage(manga.mangaId, manga.coverName)}
@@ -24,7 +24,7 @@ export default function Header({ manga }: Props) {
         height={400}
         alt={manga.title}
       />
-      <div className='z-20 flex w-[80%] items-center justify-start gap-10'>
+      <div className='z-20 flex w-[80%] flex-col items-center justify-center gap-10 py-8 md:flex-row md:justify-start md:py-0'>
         {/* COVER */}
         <Image
           src={getCoverImage(manga.mangaId, manga.coverName)}
@@ -33,7 +33,7 @@ export default function Header({ manga }: Props) {
           height={400}
           alt={manga.title}
         />
-        <div className='relative text-white'>
+        <div className='relative flex flex-col items-center justify-center text-white md:items-start'>
           <h2 className='mb-4'>{manga.title}</h2>
           {/* GENRE LIST */}
           <ul className='mb-4 flex flex-wrap items-center gap-1'>

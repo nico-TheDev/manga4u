@@ -19,10 +19,28 @@ export default function TitleSlider({ title, mangaList }: Props) {
       <h2 className='mb-8 text-white'>{title}</h2>
       <Swiper
         modules={[Navigation]}
-        spaceBetween={40}
-        slidesPerView={5}
+        spaceBetween={10}
+        slidesPerView={1}
         navigation
         loop={false}
+        breakpoints={{
+          368: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          640: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+          1024: {
+            slidesPerView: 5,
+            spaceBetween: 50,
+          },
+        }}
       >
         {mangaList?.map((manga: MangaSummary) => (
           <SwiperSlide key={manga.mangaId}>

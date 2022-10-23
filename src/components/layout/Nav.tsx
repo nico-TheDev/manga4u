@@ -2,7 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { HiOutlineMoon, HiOutlineUserCircle, HiSearch } from 'react-icons/hi';
+import {
+  HiMenu,
+  HiOutlineMoon,
+  HiOutlineUserCircle,
+  HiSearch,
+} from 'react-icons/hi';
 
 import logo from '@/assets/img/logo.png';
 
@@ -30,7 +35,7 @@ export default function Nav() {
   const { pathname } = router;
 
   return (
-    <nav className='mx-auto my-8 flex h-[15vh] w-[90%] items-start justify-between'>
+    <nav className='mx-auto my-8 flex h-[10vh] w-[90%] items-center justify-between md:h-[15vh] md:items-start'>
       <Link href='/'>
         <a>
           <Image src={logo} alt='Main Logo' layout='fixed' width={200} />
@@ -38,7 +43,7 @@ export default function Nav() {
       </Link>
 
       <div className='grid max-w-lg flex-1 gap-4'>
-        <form className='flex rounded-md border-2 border-white px-2 py-1'>
+        <form className='hidden rounded-md border-2 border-white px-2 py-1 md:flex'>
           <HiSearch className='icon' />
           <input
             type='text'
@@ -47,7 +52,7 @@ export default function Nav() {
           />
         </form>
 
-        <ul className='flex items-center justify-between gap-8'>
+        <ul className='hidden items-center justify-between gap-8 md:flex'>
           {pathList.map((item) => (
             <li className='' key={item.name}>
               <Link href={item.path}>
@@ -65,7 +70,7 @@ export default function Nav() {
         </ul>
       </div>
 
-      <ul className='flex items-center gap-2'>
+      <ul className='hidden items-center gap-2 md:flex'>
         <li className=''>
           <button className=''>
             <HiOutlineMoon className='icon cursor-pointer' />
@@ -79,6 +84,12 @@ export default function Nav() {
           </Link>
         </li>
       </ul>
+
+      {/* MENU BURGER */}
+
+      <button className='md:hidden'>
+        <HiMenu className='icon cursor-pointer' />
+      </button>
     </nav>
   );
 }
