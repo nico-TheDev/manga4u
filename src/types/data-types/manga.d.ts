@@ -48,3 +48,7 @@ export interface MangaSummary {
   description: string;
   lastUpdated: string;
 }
+
+export type MangaResponse = ApiResponse<{
+  data: MangaData;
+}>;
