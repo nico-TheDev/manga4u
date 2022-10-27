@@ -1,4 +1,5 @@
 import { AppProps } from 'next/app';
+import { SWRConfig } from 'swr';
 
 import '@/styles/globals.css';
 
@@ -7,10 +8,16 @@ import Seo from '@/components/Seo';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Seo />
-      <Component {...pageProps} />;
-    </Layout>
+    <SWRConfig
+      value={{
+        refreshInterval: 3000,
+      }}
+    >
+      <Layout>
+        <Seo />
+        <Component {...pageProps} />;
+      </Layout>
+    </SWRConfig>
   );
 }
 

@@ -8,7 +8,8 @@ import TitleSlider from '@/components/TitleSlider';
 import apiInstance from '@/api';
 import filterMangaData from '@/utils/filterMangaData';
 
-import { MangaSummary } from '@/types/data-types/manga';
+import { Chapter } from '@/types/data-types/chapter';
+import { MangaData, MangaSummary } from '@/types/data-types/manga';
 
 type Props = {
   popularMangaList: MangaSummary[];
@@ -16,7 +17,11 @@ type Props = {
   recentlyAddedMangaList: MangaSummary[];
   completedMangaList: MangaSummary[];
   recommendedMangaList: MangaSummary[];
+  recentChapters: Chapter[];
+  recent: MangaData[];
 };
+
+// https://api.mangadex.org/chapter?includes[]=manga&includes[]=scanlation_group&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[readableAt]=desc&offset=0&limit=24
 
 export async function getStaticProps() {
   try {
@@ -28,7 +33,7 @@ export async function getStaticProps() {
         '/manga?limit=30&contentRating[]=safe&order[updatedAt]=desc&includes[]=cover_art'
       ),
       apiInstance.get(
-        '/manga?limit=6&contentRating[]=safe&order[updatedAt]=desc&includes[]=cover_art'
+        '/manga?limit=12&contentRating[]=safe&order[updatedAt]=desc&includes[]=chapter&includes[]=cover_art'
       ),
       apiInstance.get(
         '/manga?limit=30&contentRating[]=safe&order[rating]=desc&includes[]=cover_art&status[]=completed'
@@ -51,7 +56,6 @@ export async function getStaticProps() {
     const recentlyAddedMangaList = filterMangaData(recentlyAddedData);
     const completedMangaList = filterMangaData(completedData);
     const recommendedMangaList = filterMangaData(recommendedData);
-
     return {
       props: {
         popularMangaList,
@@ -59,6 +63,7 @@ export async function getStaticProps() {
         recentlyAddedMangaList,
         completedMangaList,
         recommendedMangaList,
+        recent: recentlyAddedData,
       },
     };
   } catch (err) {

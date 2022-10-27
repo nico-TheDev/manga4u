@@ -3,6 +3,8 @@ import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import useCover from '@/hooks/useCover';
+
 import Button from '@/components/buttons/Button';
 
 import getCoverImage from '@/utils/getCoverImage';
@@ -16,9 +18,22 @@ type Props = {
 
 export default function SummaryCard({ manga }: Props) {
   const router = useRouter();
+  const { isLoading, isError } = useCover(manga.mangaId);
 
   const handleClick = () => router.push(`/manga/${manga.mangaId}`);
-  // TODO: GET THE LATEST CHAPTER HERE
+
+  if (isLoading)
+    return (
+      <div className='animated flex animate-pulse bg-secondary-dark pr-4'></div>
+    );
+
+  if (isError)
+    return (
+      <p className='flex bg-secondary-dark p-4 text-red-500'>
+        Something Went Wrong!
+      </p>
+    );
+
   return (
     <div className='flex items-center gap-5 bg-secondary-dark pr-4 text-white '>
       <Image
@@ -31,9 +46,9 @@ export default function SummaryCard({ manga }: Props) {
 
       <div className='flex h-full flex-1 flex-col items-start justify-between gap-4 p-4 text-sm'>
         <h6 className='text-lg font-bold'>{trimString(manga.title, 40)}</h6>
-        <p className=''>Chapter 1063</p>
+        <p className=''>Chapter {manga.lastChapter || '?'}</p>
         <p className=''>
-          {moment(manga.lastUpdated).startOf('hour').fromNow()}
+          {moment(manga.lastUpdated).startOf('minute').fromNow()}
         </p>
         <Button
           variant='primary'

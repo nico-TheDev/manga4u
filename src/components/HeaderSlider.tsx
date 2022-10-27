@@ -23,11 +23,12 @@ export default function HeaderSlider({ mangaList }: Props) {
         clickable: true,
       }}
     >
-      {mangaList.map((manga: MangaSummary) => (
-        <SwiperSlide key={manga.mangaId}>
-          <Header manga={manga} />
-        </SwiperSlide>
-      ))}
+      {mangaList &&
+        mangaList.map((manga: MangaSummary) => (
+          <SwiperSlide key={manga.mangaId}>
+            <Header manga={manga} />
+          </SwiperSlide>
+        ))}
     </Swiper>
   );
 }

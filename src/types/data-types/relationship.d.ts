@@ -1,5 +1,3 @@
-import { CoverArtAttributes } from '@/types/data-types/cover-art';
-
 export type MangaResource = 'manga';
 export type ChapterResource = 'chapter';
 export type CoverArtResource = 'cover_art';
@@ -21,8 +19,8 @@ export type RelationshipType =
   | UserResource
   | CustomListResource;
 
-export interface Relationship {
+export interface Relationship<Type> {
   id: string;
   type: RelationshipType;
-  attributes?: CoverArtAttributes;
+  attributes?: Type;
 }

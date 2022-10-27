@@ -42,11 +42,12 @@ export type Genre = {
 export interface MangaSummary {
   mangaId: string;
   title: string;
-  authorId: string | undefined;
+  authorId?: string | undefined;
   tags: Genre[];
   coverName: string;
   description: string;
-  lastUpdated: string;
+  lastUpdated?: string;
+  lastChapter?: string;
 }
 
 export type MangaResponse = ApiResponse<{
