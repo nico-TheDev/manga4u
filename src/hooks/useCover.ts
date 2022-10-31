@@ -7,14 +7,14 @@ import { MangaData } from '@/types/data-types/manga';
 const fetcher: Fetcher<MangaData, string> = (url) =>
   apiInstance.get(url).then((res) => res.data.data);
 
-const useCover = (id: string) => {
-  const { data, error } = useSWR(`/manga/${id}`, fetcher);
+const useManga = (id: string) => {
+  const { data, error } = useSWR(`/manga/${id}?includes[]=cover_art`, fetcher);
 
   return {
-    chapter: data,
+    mangaDetail: data,
     isLoading: !error && !data,
     isError: error,
   };
 };
 
-export default useCover;
+export default useManga;

@@ -3,26 +3,31 @@ import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import useCover from '@/hooks/useCover';
+import useManga from '@/hooks/useCover';
 
 import Button from '@/components/buttons/Button';
 
+import { filterManga } from '@/utils/filterMangaData';
 import getCoverImage from '@/utils/getCoverImage';
 import trimString from '@/utils/trimString';
 
-import { MangaSummary } from '@/types/data-types/manga';
-
 type Props = {
-  manga: MangaSummary;
+  manga: {
+    mangaId: string;
+    latestChapter: string;
+    latestDate?: string;
+  };
 };
 
 export default function SummaryCard({ manga }: Props) {
   const router = useRouter();
-  const { isLoading, isError } = useCover(manga.mangaId);
+  const { mangaDetail, isLoading, isError } = useManga(manga.mangaId);
+
+  const currentManga = mangaDetail && filterManga(mangaDetail);
 
   const handleClick = () => router.push(`/manga/${manga.mangaId}`);
 
-  if (isLoading)
+  if (isLoading || !mangaDetail)
     return (
       <div className='animated flex animate-pulse bg-secondary-dark pr-4'></div>
     );
@@ -37,18 +42,20 @@ export default function SummaryCard({ manga }: Props) {
   return (
     <div className='flex items-center gap-5 bg-secondary-dark pr-4 text-white '>
       <Image
-        src={getCoverImage(manga.mangaId, manga.coverName)}
-        alt={manga.title}
+        src={getCoverImage(manga.mangaId, currentManga?.coverName)}
+        alt={currentManga?.title || 'No Title'}
         className='block h-full w-36 object-cover md:h-60 md:w-40'
         width={256}
         height={512}
       />
 
       <div className='flex h-full flex-1 flex-col items-start justify-between gap-4 p-4 text-sm'>
-        <h6 className='text-lg font-bold'>{trimString(manga.title, 40)}</h6>
-        <p className=''>Chapter {manga.lastChapter || '?'}</p>
+        <h6 className='text-lg font-bold'>
+          {trimString(currentManga?.title || 'No Title', 40)}
+        </h6>
+        <p className=''>Chapter {manga.latestChapter}</p>
         <p className=''>
-          {moment(manga.lastUpdated).startOf('minute').fromNow()}
+          {moment(manga.latestDate).startOf('minute').fromNow()}
         </p>
         <Button
           variant='primary'

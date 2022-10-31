@@ -19,6 +19,7 @@ export interface ChapterAttributes extends AttributeBase {
   data: string[];
   dataSaver: string[];
   publishAt: string;
+  readableAt: string;
 }
 
 export type ChapterAttributesExtended = ChapterAttributes &
