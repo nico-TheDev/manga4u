@@ -1,4 +1,5 @@
 import Image from 'next/future/image';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import Button from '@/components/buttons/Button';
@@ -14,6 +15,12 @@ type Props = {
 };
 
 export default function Header({ manga }: Props) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`manga/${manga.mangaId}`);
+  };
+
   return (
     <header className='relative flex h-max items-center justify-center md:h-[60vh]'>
       {/* BACKGROUND */}
@@ -44,7 +51,11 @@ export default function Header({ manga }: Props) {
             ))}
           </ul>
           <p className='mb-8 max-w-3xl'>{trimString(manga.description, 220)}</p>
-          <Button variant='primary' className='text-sm uppercase'>
+          <Button
+            variant='primary'
+            className='text-sm uppercase'
+            onClick={handleClick}
+          >
             Start Reading
           </Button>
         </div>

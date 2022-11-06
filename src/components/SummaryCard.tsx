@@ -3,7 +3,7 @@ import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import useManga from '@/hooks/useCover';
+import useMangaDetails from '@/hooks/useMangaDetails';
 
 import Button from '@/components/buttons/Button';
 
@@ -21,7 +21,7 @@ type Props = {
 
 export default function SummaryCard({ manga }: Props) {
   const router = useRouter();
-  const { mangaDetail, isLoading, isError } = useManga(manga.mangaId);
+  const { mangaDetail, isLoading, isError } = useMangaDetails(manga.mangaId);
 
   const currentManga = mangaDetail && filterManga(mangaDetail);
 
