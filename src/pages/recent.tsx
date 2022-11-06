@@ -8,22 +8,22 @@ import { filterMangaData } from '@/utils/filterMangaData';
 import { MangaSummary } from '@/types/data-types/manga';
 
 interface IProps {
-  popularManga: MangaSummary[];
+  recentManga: MangaSummary[];
 }
 
 export async function getStaticProps() {
   try {
     const res = await apiInstance.get(
-      `/manga?limit=30&contentRating[]=safe&order[rating]=desc&includes[]=cover_art`
+      `/manga?limit=30&contentRating[]=safe&order[latestUploadedChapter]=desc&includes[]=cover_art`
     );
 
     const data = await res.data.data;
 
-    const popularManga = filterMangaData(data);
+    const recentManga = filterMangaData(data);
 
     return {
       props: {
-        popularManga,
+        recentManga,
       },
     };
   } catch (err) {
@@ -35,9 +35,9 @@ export async function getStaticProps() {
   }
 }
 
-function PopularPage({ popularManga }: IProps) {
+function RecentPage({ recentManga }: IProps) {
   // console.log(popularManga);
-  return <MangaPageList title='Popular Page' mangaList={popularManga} />;
+  return <MangaPageList title='Recently Added Manga' mangaList={recentManga} />;
 }
 
-export default PopularPage;
+export default RecentPage;

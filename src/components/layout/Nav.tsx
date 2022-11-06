@@ -17,15 +17,15 @@ const pathList = [
     name: 'home',
   },
   {
-    path: 'popular',
+    path: '/popular',
     name: 'popular',
   },
   {
-    path: 'latest',
+    path: '/latest',
     name: 'latest',
   },
   {
-    path: 'recent',
+    path: '/recent',
     name: 'recently added',
   },
 ];
@@ -34,7 +34,7 @@ export default function Nav() {
   const router = useRouter();
   const { pathname } = router;
 
-  const currentPath = pathname.slice(1); // remove the / at the beginning
+  const currentPath = pathname === '/' ? '/' : pathname;
 
   return (
     <nav className='mx-auto my-8 flex h-[10vh] w-[90%] items-center justify-between md:h-[15vh] md:items-start'>
@@ -60,7 +60,7 @@ export default function Nav() {
               <Link href={item.path}>
                 <a
                   className={`text-md border-b-4 border-b-transparent pb-2 font-bold capitalize text-white hover:border-b-primary-main hover:text-primary-main ${
-                    currentPath === item.name &&
+                    currentPath === item.path &&
                     'border-b-primary-main text-primary-main'
                   }`}
                 >
